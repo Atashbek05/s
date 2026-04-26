@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Result</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.score {
+  font-size: 28px;
+  font-weight: bold;
+  color: #0a1f44;
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+  <h2>IELTS Result</h2>
+
+  <p id="name"></p>
+
+  <p>Reading: <span id="r"></span></p>
+  <p>Listening: <span id="l"></span></p>
+  <p>Writing: <span id="w"></span></p>
+
+  <p class="score" id="overall"></p>
+</div>
+
+<script>
+const name = localStorage.getItem("name");
+const surname = localStorage.getItem("surname");
+
+const reading = localStorage.getItem("readingAnswer") ? 7 : 6;
+const listening = localStorage.getItem("listeningAnswer") ? 7 : 6;
+const writing = localStorage.getItem("writingAnswer") ? 7 : 6;
+
+const overall = ((reading + listening + writing) / 3).toFixed(1);
+
+document.getElementById("name").innerText = name + " " + surname;
+
+document.getElementById("r").innerText = reading;
+document.getElementById("l").innerText = listening;
+document.getElementById("w").innerText = writing;
+
+document.getElementById("overall").innerText = "Overall: " + overall;
+</script>
+
+</body>
+</html>
