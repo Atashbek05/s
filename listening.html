@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Listening Test</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 700px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #0a1f44;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+  <h2>Listening Section</h2>
+
+  <p><b>Audio:</b></p>
+
+  <audio controls>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <p><b>Question:</b> What is the speaker talking about?</p>
+
+  <input id="answer" placeholder="Your answer">
+
+  <button onclick="next()">Next (Writing)</button>
+</div>
+
+<script>
+function next() {
+  const answer = document.getElementById("answer").value;
+
+  localStorage.setItem("listeningAnswer", answer);
+
+  window.location.href = "writing.html";
+}
+</script>
+
+</body>
+</html>
