@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Reading Test</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f5f7fb;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 700px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+textarea, input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #0a1f44;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+  <h2>Reading Section</h2>
+
+  <p><b>Passage:</b></p>
+  <p>
+    Climate change is one of the most serious problems in the world today.
+    It affects weather patterns, sea levels, and ecosystems.
+  </p>
+
+  <p><b>Question:</b> What is the main topic of the passage?</p>
+
+  <input id="answer" placeholder="Your answer">
+
+  <button onclick="next()">Next (Listening)</button>
+</div>
+
+<script>
+function next() {
+  const answer = document.getElementById("answer").value;
+
+  localStorage.setItem("readingAnswer", answer);
+
+  window.location.href = "listening.html";
+}
+</script>
+
+</body>
+</html>
