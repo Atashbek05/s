@@ -2,218 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IELTS Prep</title>
+<title>IELTS Start</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background: #f5f7fb;
-}
-
-header {
-  background: #0a1f44;
-  color: white;
-  padding: 15px 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.logo span {
-  color: #ff3b3b;
-}
-
-nav button {
-  margin-left: 10px;
-  padding: 10px 15px;
-  border: none;
-  background: white;
-  color: #0a1f44;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-nav button:hover {
-  background: #ff3b3b;
-  color: white;
-}
-
-.container {
-  padding: 30px;
+  height: 100vh;
 }
 
 .card {
   background: white;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 30px;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 350px;
 }
 
-textarea, input {
+input {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
 
-.main-btn {
-  margin-top: 15px;
+button {
+  width: 100%;
   padding: 12px;
-  background: #ff3b3b;
+  margin-top: 15px;
+  background: #0a1f44;
   color: white;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
-}
-
-.main-btn:hover {
-  background: #d92c2c;
-}
-
-.result {
-  margin-top: 15px;
-  font-size: 18px;
-  font-weight: bold;
 }
 </style>
-</head>
 
+</head>
 <body>
 
-<header>
-  <div class="logo">IELTS <span>Prep</span></div>
-  <nav>
-    <button onclick="showMaterials()">Materials</button>
-    <button onclick="showWriting()">Writing</button>
-    <button onclick="showReading()">Reading</button>
-    <button onclick="showListening()">Listening</button>
-    <button onclick="showMock()">Mock Test</button>
-  </nav>
-</header>
+<div class="card">
+  <h2>IELTS Mock Test</h2>
 
-<div class="container" id="content">
-  <h2>Welcome to IELTS Prep Platform</h2>
-  <p>Practice Writing, Reading, Listening and improve your score.</p>
+  <input id="name" placeholder="Enter Name">
+  <input id="surname" placeholder="Enter Surname">
+
+  <button onclick="start()">Start</button>
 </div>
 
 <script>
-const API = "https://ielts-backend-1.onrender.com";
-const content = document.getElementById("content");
+function start() {
+  const name = document.getElementById("name").value;
+  const surname = document.getElementById("surname").value;
 
-async function showMaterials() {
-  const res = await fetch(API + "/materials");
-  const data = await res.json();
+  localStorage.setItem("name", name);
+  localStorage.setItem("surname", surname);
 
-  content.innerHTML = "<h2>IELTS Materials</h2>" +
-    data.map(m => `
-      <div class="card">
-        <h3>${m.title}</h3>
-        <p><b>${m.category}</b></p>
-        <p>${m.content}</p>
-      </div>
-    `).join("");
-}
-
-function showWriting() {
-  content.innerHTML = `
-    <div class="card">
-      <h2>Writing Practice</h2>
-      <textarea id="essay" rows="8" placeholder="Write your essay..."></textarea>
-      <button class="main-btn" onclick="submitWriting()">Submit</button>
-      <div id="result" class="result"></div>
-    </div>
-  `;
-}
-
-async function submitWriting() {
-  const text = document.getElementById("essay").value;
-
-  const res = await fetch(API + "/ielts/writing", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ text })
-  });
-
-  const data = await res.json();
-  document.getElementById("result").innerText = data.result;
-}
-
-function showReading() {
-  content.innerHTML = `
-    <div class="card">
-      <h2>Reading Practice</h2>
-      <p>Global warming affects climate change worldwide...</p>
-      <input id="readAns" placeholder="Your answer">
-      <button class="main-btn" onclick="submitReading()">Submit</button>
-      <div id="result" class="result"></div>
-    </div>
-  `;
-}
-
-async function submitReading() {
-  const answer = document.getElementById("readAns").value;
-
-  const res = await fetch(API + "/ielts/reading", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ answers: [answer] })
-  });
-
-  const data = await res.json();
-  document.getElementById("result").innerText = "Score: " + data.score;
-}
-
-function showListening() {
-  content.innerHTML = `
-    <div class="card">
-      <h2>Listening Practice</h2>
-      <audio controls>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-      </audio>
-      <input id="listenAns" placeholder="Your answer">
-      <button class="main-btn" onclick="submitListening()">Submit</button>
-      <div id="result" class="result"></div>
-    </div>
-  `;
-}
-
-async function submitListening() {
-  const answer = document.getElementById("listenAns").value;
-
-  const res = await fetch(API + "/ielts/listening", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ answers: [answer] })
-  });
-
-  const data = await res.json();
-  document.getElementById("result").innerText = "Score: " + data.score;
-}
-
-async function showMock() {
-  const res = await fetch(API + "/mock/result");
-  const data = await res.json();
-
-  content.innerHTML = `
-    <div class="card">
-      <h2>Mock IELTS Result</h2>
-      <p>Writing: ${data.Writing}</p>
-      <p>Reading: ${data.Reading}</p>
-      <p>Listening: ${data.Listening}</p>
-      <h3>Your overall: ${data.Overall}</h3>
-    </div>
-  `;
+  window.location.href = "instructions.html";
 }
 </script>
 
